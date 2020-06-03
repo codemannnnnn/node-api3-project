@@ -1,20 +1,30 @@
-const express = require('express');
-
+const express = require("express");
+const posts = require("./postDb.js");
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
+  // do your magic!
+  posts
+    .get(req.query)
+    .then((e) => {
+      res.status(200).json(e);
+    })
+    .catch((e) => {
+      res
+        .status(500)
+        .json({ message: "This was an error retrieving the posts." });
+    });
+});
+
+router.get("/:id", (req, res) => {
   // do your magic!
 });
 
-router.get('/:id', (req, res) => {
+router.delete("/:id", (req, res) => {
   // do your magic!
 });
 
-router.delete('/:id', (req, res) => {
-  // do your magic!
-});
-
-router.put('/:id', (req, res) => {
+router.put("/:id", (req, res) => {
   // do your magic!
 });
 
