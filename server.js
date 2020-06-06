@@ -1,13 +1,13 @@
 const express = require("express");
+const server = express();
 const morgan = require("morgan");
 const userRouter = require("./users/userRouter");
 const postRouter = require("./posts/postRouter");
 
-const server = express();
-
 //global middleware
 server.use(express.json());
 server.use(morgan("dev"));
+server.use(logger);
 server.use("/api/users", userRouter);
 server.use("/api/posts", postRouter);
 
@@ -18,6 +18,11 @@ server.get("/", (req, res) => {
 
 //custom middleware
 
-function logger(req, res, next) {}
+function logger(req, res, next) {
+  console.log(
+    `${new Date().toISOString()}${req.method}${req.url}${req.get("Origin")}`
+  );
+  next();
+}
 
 module.exports = server;
